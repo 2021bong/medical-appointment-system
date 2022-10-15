@@ -10,12 +10,12 @@ const App = () => {
         <h2 className='greeting'>안녕하세요, 룰루 병원입니다.</h2>
       </div>
       <div className='btnContainer'>
-        <button>
-          <Link>진료 예약하기</Link>
-        </button>
-        <button>
-          <Link>예약 조회하기</Link>
-        </button>
+        <Link to='reservation'>
+          <button>진료 예약하기</button>
+        </Link>
+        <Link to='inquiry'>
+          <button>예약 조회하기</button>
+        </Link>
       </div>
     </Wrap>
   );
@@ -56,32 +56,36 @@ const Wrap = styled.div`
     align-items: center;
     width: 50%;
 
-    button {
+    a {
+      display: block;
       width: 50%;
+      min-width: 280px;
       height: 3rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 20px;
-      color: inherit;
-      box-shadow: ${({ theme }) => theme.basicShadow};
 
       &:first-child {
         margin-bottom: 15px;
       }
 
-      &:hover {
-        background-color: ${({ theme }) => theme.red};
-        color: #fff;
-        box-shadow: ${({ theme }) => theme.basicShadow};
-      }
-      &:active {
-        background-color: ${({ theme }) => theme.red};
-        color: #fff;
-        box-shadow: ${({ theme }) => theme.activeShadow};
-      }
-
-      a {
+      button {
+        width: 100%;
+        height: 100%;
+        background-color: inherit;
+        border: none;
+        border-radius: 10px;
+        font-size: 20px;
         color: inherit;
+        box-shadow: ${({ theme }) => theme.basicShadow};
+
+        &:hover {
+          background-color: ${({ theme }) => theme.red};
+          color: #fff;
+          box-shadow: ${({ theme }) => theme.basicShadow};
+        }
+        &:active {
+          background-color: ${({ theme }) => theme.red};
+          color: #fff;
+          box-shadow: ${({ theme }) => theme.activeShadow};
+        }
       }
     }
   }
