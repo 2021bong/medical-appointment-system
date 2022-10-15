@@ -1,8 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import App from './App';
 import { ThemeProvider } from 'styled-components';
 import * as theme from './styles/theme';
+
+import App from './App';
+import Reservation from './pages/reservation/Reservation';
+import Inquiry from './pages/inquiry/Inquiry';
 
 const Router = () => {
   return (
@@ -10,6 +13,8 @@ const Router = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<App />} />
+          <Route path='/reservation' element={<Reservation />} />
+          <Route path='/inquiry' element={<Inquiry />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
