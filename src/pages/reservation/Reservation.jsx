@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
-import 'react-datepicker/dist/react-datepicker.css';
-import { time } from '../../utils/time';
+
 import { RiCalendarCheckFill } from 'react-icons/ri';
+import { IoArrowBack } from 'react-icons/io5';
+import { time } from '../../utils/time';
+
+import styled from 'styled-components';
+import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('ko', ko);
 
@@ -13,12 +17,17 @@ const Reservation = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [reservationTime, setReservationTime] = useState();
 
+  const today = new Date();
+
   const handleReservationTime = (e) => {
     setReservationTime(e.target.value);
   };
 
   return (
     <Main>
+      <Link to='/' className='back'>
+        <IoArrowBack size='3rem' />
+      </Link>
       <div className='titleContainer'>
         <div className='title'>
           <RiCalendarCheckFill size='2rem' />
@@ -29,6 +38,8 @@ const Reservation = () => {
           dateFormatCalendar='yy년 LL월'
           closeOnScroll={true}
           selected={startDate}
+          minDate={today}
+          maxDate={new Date(today.getFullYear(), today.getMonth() + 1, 15)}
           onChange={(date) => setStartDate(date)}
           locale='ko'
         />
@@ -80,9 +91,11 @@ const CustomDatePicker = styled(DatePicker)`
   text-align: center;
   outline: none;
   box-shadow: ${({ theme }) => theme.basicShadow};
+  cursor: pointer;
 `;
 
 const Main = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,6 +107,18 @@ const Main = styled.div`
   border-radius: 35px;
   box-shadow: ${({ theme }) => theme.basicShadow};
   color: ${({ theme }) => theme.text};
+
+  .back {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    border: none;
+    color: ${({ theme }) => theme.text};
+
+    &:active {
+      color: ${({ theme }) => theme.red};
+    }
+  }
 
   .titleContainer {
     margin-bottom: 10px;
