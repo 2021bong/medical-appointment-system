@@ -9,6 +9,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
   }
 
+  body {
+    background-color: #eee;
+  }
+
   ul, ol, li {
     list-style: none;
   }
