@@ -25,7 +25,6 @@ const Inquiry = () => {
   };
 
   const handleInputText = (e) => {
-    console.log(e.target.value);
     setInputValue(e.target.value);
   };
 
@@ -72,9 +71,9 @@ const Inquiry = () => {
         {filteredList &&
           filteredList.map((reservationData) => {
             return reservationData.schedules.map((timeSchedules) => (
-              <div className='boderBottomBox'>
+              <div key={timeSchedules.id} className='boderBottomBox'>
                 <FiUserCheck size='2rem' />
-                <li key={timeSchedules.id} className='infoBox'>
+                <li className='infoBox'>
                   <div>
                     <span className='idNumber'>
                       <b>예약 번호 | </b>
