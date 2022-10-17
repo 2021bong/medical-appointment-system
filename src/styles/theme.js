@@ -3,3 +3,4 @@ export const hoverShadow = '-2px -2px 6px rgba(255, 255, 255, 0.6), 2px 2px 4px 
 export const activeShadow = 'inset -2px -2px 6px rgba(255, 255, 255, 0.7), inset 2px 2px 4px rgba(0, 0, 0, 0.15)';
 export const text = '#333';
 export const red = '#ff6961';
+export const bg = '#eee';

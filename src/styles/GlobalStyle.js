@@ -25,6 +25,19 @@ const GlobalStyle = createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  body{
+    -ms-overflow-style: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  b {
+    font-weight: 700;
+  }
+
 `;
 
 export default GlobalStyle;
