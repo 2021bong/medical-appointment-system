@@ -147,6 +147,45 @@ const Main = styled.div`
   box-shadow: ${({ theme }) => theme.basicShadow};
   color: ${({ theme }) => theme.text};
 
+  @media screen and (max-width: 414px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    padding: 10px 0 30px 0;
+    height: inherit;
+    border-radius: 0;
+
+    .back {
+      top: 0;
+      left: 1%;
+      svg {
+        width: 2rem;
+      }
+    }
+
+    .titleContainer {
+      margin: 20px 0;
+    }
+
+    .date {
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .name {
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .timeBox {
+      flex-direction: column;
+    }
+  }
+
   .back {
     position: absolute;
     top: 2%;
