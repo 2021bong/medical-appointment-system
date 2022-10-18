@@ -128,6 +128,18 @@ const Main = styled.div`
   color: ${({ theme }) => theme.text};
   box-shadow: ${({ theme }) => theme.basicShadow};
 
+  .back {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    border: none;
+    color: ${({ theme }) => theme.text};
+
+    &:active {
+      color: ${({ theme }) => theme.red};
+    }
+  }
+
   .titleContainer {
     display: flex;
     justify-content: center;
@@ -151,7 +163,7 @@ const Main = styled.div`
     justify-content: center;
     align-items: center;
     width: 40%;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     padding: 2rem;
     border-radius: 15px;
     font-size: 18px;
@@ -213,18 +225,6 @@ const Main = styled.div`
         border-radius: 5px 0 0 5px;
         outline: none;
       }
-    }
-  }
-
-  .back {
-    position: absolute;
-    top: 2%;
-    left: 2%;
-    border: none;
-    color: ${({ theme }) => theme.text};
-
-    &:active {
-      color: ${({ theme }) => theme.red};
     }
   }
 

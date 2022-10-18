@@ -1,27 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
+import getDay from 'date-fns/getDay';
 import { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
 
 import { RiCalendarCheckFill } from 'react-icons/ri';
 import { IoArrowBack } from 'react-icons/io5';
-import { time } from '../../utils/time';
+import { time, findFirstTime } from '../../utils/time';
 
 import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
 
 registerLocale('ko', ko);
 
 const Reservation = () => {
+  const [list, setList] = useState();
   const [startDate, setStartDate] = useState(new Date());
   const [reservationTime, setReservationTime] = useState();
+  const [selectedDay, setSelectedDay] = useState(
+    `${startDate.getFullYear().toString().slice(2, 4)}-${startDate.getMonth() + 1}-${startDate.getDate()}`,
+  );
+  const [selectedDayData, setSelectedDayData] = useState();
 
   const today = new Date();
+
+  useEffect(() => {
+    setSelectedDay(
+      `${startDate.getFullYear().toString().slice(2, 4)}-${startDate.getMonth() + 1}-${startDate.getDate()}`,
+    );
+  }, [startDate]);
+
+  useEffect(() => {
+    setSelectedDayData(list && list.filter((reservation) => reservation.date === selectedDay)[0]);
+  }, [selectedDay]);
 
   const handleReservationTime = (e) => {
     setReservationTime(e.target.value);
   };
+
+  const isWeekday = (date) => {
+    const day = getDay(date);
+    return day !== 0 && day !== 6;
+  };
+
+  useEffect(() => {
+    axios('data/reservation.json').then((res) => setList(res.data.reservations));
+  }, []);
 
   return (
     <Main>
@@ -40,40 +66,53 @@ const Reservation = () => {
           selected={startDate}
           minDate={today}
           maxDate={new Date(today.getFullYear(), today.getMonth() + 1, 15)}
+          filterDate={isWeekday}
           onChange={(date) => setStartDate(date)}
           locale='ko'
+          popperPlacement='auto'
         />
       </div>
       <form className='formContainer'>
-        {time.map((timeEl) => {
-          return (
-            <div className='timeContainer' key={timeEl.timeZone}>
-              <p>{timeEl.timeZone}</p>
-              <div className='timeBox'>
-                {timeEl.times.map((time) => {
-                  return time === '9:00' ? (
-                    <div key={time} className='radioBox'>
-                      <input
-                        type='radio'
-                        name='time'
-                        id={time}
-                        value={time}
-                        defaultChecked
-                        onChange={handleReservationTime}
-                      />
-                      <label htmlFor={time}>{time}</label>
-                    </div>
-                  ) : (
-                    <div key={time} className='radioBox'>
-                      <input type='radio' name='time' id={time} value={time} onChange={handleReservationTime} />
-                      <label htmlFor={time}>{time}</label>
-                    </div>
-                  );
-                })}
+        {list &&
+          time.map((timeEl) => {
+            return (
+              <div className='timeContainer' key={timeEl.timeZone}>
+                <p>{timeEl.timeZone}</p>
+                <div className='timeBox'>
+                  {timeEl.times.map((time) => {
+                    return time === findFirstTime(selectedDayData) ? (
+                      <div key={time} className='radioBox'>
+                        <input
+                          type='radio'
+                          name='time'
+                          id={time}
+                          value={time}
+                          defaultChecked
+                          onChange={handleReservationTime}
+                        />
+                        <label htmlFor={time}>{time}</label>
+                      </div>
+                    ) : (
+                      <div key={time} className='radioBox'>
+                        <input
+                          type='radio'
+                          name='time'
+                          id={time}
+                          value={time}
+                          onChange={handleReservationTime}
+                          disabled={list
+                            .filter((reservation) => reservation.date === selectedDay)[0]
+                            ?.schedules.map((schedule) => schedule.time)
+                            .includes(time)}
+                        />
+                        <label htmlFor={time}>{time}</label>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </form>
       <button className='btn'>예약 하기</button>
     </Main>
@@ -136,6 +175,55 @@ const Main = styled.div`
       }
       h2 {
         font-weight: 700;
+      }
+    }
+
+    // react-date-picker 커스텀
+    .react-datepicker {
+      margin-top: -20px;
+      border-radius: 15px;
+      box-shadow: ${({ theme }) => theme.basicShadow};
+      overflow: hidden;
+
+      .react-datepicker__header {
+        border: none;
+      }
+
+      .react-datepicker__current-month {
+        padding: 5px 0;
+        color: ${({ theme }) => theme.text};
+      }
+
+      .react-datepicker__navigation-icon--previous,
+      .react-datepicker__navigation--next {
+        margin-top: 5px;
+      }
+
+      .react-datepicker__day-name {
+        color: ${({ theme }) => theme.text};
+      }
+
+      .react-datepicker__day {
+        color: ${({ theme }) => theme.text};
+
+        &:hover {
+          border-radius: 50%;
+          background-color: #ff696180;
+        }
+      }
+
+      .react-datepicker__day--disabled {
+        color: #ccc;
+
+        &:hover {
+          background-color: #fff;
+        }
+      }
+
+      .react-datepicker__day--selected {
+        border-radius: 50%;
+        background-color: ${({ theme }) => theme.red};
+        color: #fff;
       }
     }
   }
