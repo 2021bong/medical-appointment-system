@@ -27,5 +27,5 @@ export const phoneNumber = atom({
 
 export const type = atom({
   key: 'type',
-  default: '',
+  default: '일반진료',
 });

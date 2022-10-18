@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { reservationId, name, phoneNumber, type } from '../../../atoms';
 
-const ThirdStep = ({ list }) => {
+const ThirdStep = () => {
   const id = useRecoilValue(reservationId);
   const typeValue = useRecoilValue(type);
   const [nameData, setNameDate] = useRecoilState(name);

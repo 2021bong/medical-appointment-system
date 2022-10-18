@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { GlobalSelectedDay, GlobalSelectedTime, reservationId, name, phoneNumber, type } from '../../../atoms';
 import { RiCalendarCheckFill } from 'react-icons/ri';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const SecondStep = ({ setList, setStep }) => {
+  const [blackList, setBlackList] = useState();
   const [nameValue, setNameValue] = useRecoilState(name);
   const [phoneValue, setPhoneValue] = useRecoilState(phoneNumber);
   const [, setTypeValue] = useRecoilState(type);
@@ -15,6 +17,12 @@ const SecondStep = ({ setList, setStep }) => {
   const handleNextStep = () => {
     const joinedDate = date.join('-');
     if (nameValue && phoneNumber) {
+      if (
+        blackList.filter((info) => info.name === nameValue).length !== 0 &&
+        blackList.filter((info) => info.phoneNumber === phoneValue).length !== 0
+      ) {
+        return window.alert('인터넷으로 예약이 불가한 고객입니다.\n병원으로 문의하시기 바랍니다.');
+      }
       setList((prev) => {
         let newList = [...prev];
         for (let i = 0; i < newList.length; i++) {
@@ -29,9 +37,13 @@ const SecondStep = ({ setList, setStep }) => {
       });
       setStep(3);
     } else {
-      window.confirm('이름과 전화번호를 모두 입력해주세요.');
+      window.alert('이름과 전화번호를 모두 입력해주세요.');
     }
   };
+
+  useEffect(() => {
+    axios('data/blackList.json').then((res) => setBlackList(res.data.blackList));
+  }, []);
 
   return (
     <Main>
@@ -56,8 +68,16 @@ const SecondStep = ({ setList, setStep }) => {
           <input className='textInput' type='text' value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
         </div>
         <div className='alignContainer'>
-          <label>휴대폰 번호</label>
-          <input className='textInput' type='text' value={phoneValue} onChange={(e) => setPhoneValue(e.target.value)} />
+          <div className='phoneNumberBox'>
+            <label>휴대폰 번호</label>
+            <input
+              className='textInput'
+              type='text'
+              value={phoneValue}
+              onChange={(e) => setPhoneValue(e.target.value)}
+            />
+          </div>
+          <p className='information mb0'>* '-' 없이 번호만 입력해주세요.</p>
         </div>
         <div className='alignContainer'>
           <label className='inputTitle'>예약 종류</label>
@@ -199,6 +219,14 @@ const Main = styled.div`
         outline: none;
       }
 
+      .phoneNumberBox {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      &:nth-child(2),
       &:nth-child(3),
       &:nth-child(4) {
         flex-direction: column;
@@ -265,6 +293,10 @@ const Main = styled.div`
         box-shadow: ${({ theme }) => theme.activeShadow};
       }
     }
+  }
+
+  .mb0 {
+    margin-bottom: 0;
   }
 
   .mb30 {
