@@ -9,7 +9,7 @@ const Reservation = ({ list, setList }) => {
   return (
     <>
       {step === 1 && <FirstStep list={list} setStep={setStep} />}
-      {step === 2 && <SecondStep list={list} setStep={setStep} />}
+      {step === 2 && <SecondStep setList={setList} setStep={setStep} />}
       {step === 3 && <ThirdStep list={list} setStep={setStep} />}
     </>
   );

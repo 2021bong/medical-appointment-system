@@ -4,10 +4,12 @@ import DatePicker from 'react-datepicker';
 import getDay from 'date-fns/getDay';
 import { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
+import { useRecoilState } from 'recoil';
 
 import { RiCalendarCheckFill } from 'react-icons/ri';
 import { IoArrowBack } from 'react-icons/io5';
 import { defaultTime, handleReservationTime, handleSelectedReservationTime } from '../../../utils/time';
+import { GlobalSelectedDay, GlobalSelectedTime, reservationId } from '../../../atoms';
 
 import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -19,6 +21,9 @@ const FirstStep = ({ list, setStep }) => {
   const [selectedDay, setSelectedDay] = useState(
     `${startDate.getFullYear().toString().slice(2, 4)}-${startDate.getMonth() + 1}-${startDate.getDate()}`,
   );
+  const [, setRecoilDay] = useRecoilState(GlobalSelectedDay);
+  const [, setRecoilTime] = useRecoilState(GlobalSelectedTime);
+  const [, setRecoilId] = useRecoilState(reservationId);
   const [selectedTime, setSelectedTime] = useState();
   const [selectedDayList, setSelectedDayList] = useState();
   const [timeList, setTimeList] = useState();
@@ -50,6 +55,18 @@ const FirstStep = ({ list, setStep }) => {
       ? setTimeList(handleReservationTime(selectedDayList.schedules))
       : setTimeList(defaultTime);
   }, [selectedDayList]);
+
+  useEffect(() => {
+    setRecoilDay(selectedDay.split('-'));
+    setRecoilTime(selectedTime);
+    selectedTime &&
+      setRecoilId(
+        selectedDay.split('-').join('') +
+          (selectedTime.length === 5
+            ? selectedTime.slice(0, 2) + selectedTime.slice(3, 5)
+            : '0' + selectedTime.slice(0, 1) + selectedTime.slice(2, 4)),
+      );
+  }, [selectedDay, selectedTime]);
 
   const handleSelectedTime = (e) => {
     setSelectedTime(e.target.id);

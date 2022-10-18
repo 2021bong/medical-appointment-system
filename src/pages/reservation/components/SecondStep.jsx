@@ -1,7 +1,38 @@
+import { useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { GlobalSelectedDay, GlobalSelectedTime, reservationId, name, phoneNumber, type } from '../../../atoms';
 import { RiCalendarCheckFill } from 'react-icons/ri';
 import styled from 'styled-components';
 
-const SecondStep = ({ list, setStep }) => {
+const SecondStep = ({ setList, setStep }) => {
+  const [nameValue, setNameValue] = useRecoilState(name);
+  const [phoneValue, setPhoneValue] = useRecoilState(phoneNumber);
+  const [, setTypeValue] = useRecoilState(type);
+  const date = useRecoilValue(GlobalSelectedDay);
+  const time = useRecoilValue(GlobalSelectedTime);
+  const id = useRecoilValue(reservationId);
+
+  const handleNextStep = () => {
+    const joinedDate = date.join('-');
+    if (nameValue && phoneNumber) {
+      setList((prev) => {
+        let newList = [...prev];
+        for (let i = 0; i < newList.length; i++) {
+          if (newList[i].date === joinedDate) {
+            newList[i].schedules.push({ id, time, name: nameValue, phoneNumber: phoneValue });
+            return newList;
+          } else {
+            newList.push({ date: date.join('-'), schedules: [{ id, time, name: nameValue, phoneNumber: phoneValue }] });
+            return newList;
+          }
+        }
+      });
+      setStep(3);
+    } else {
+      window.confirm('이름과 전화번호를 모두 입력해주세요.');
+    }
+  };
+
   return (
     <Main>
       <div className='titleContainer'>
@@ -10,25 +41,27 @@ const SecondStep = ({ list, setStep }) => {
       </div>
       <div className='timeContainer'>
         <p>
-          <b>예약 날짜 | </b>22년 10월 21일
+          <b>예약 날짜 | </b>
+          {`${date[0]}년 ${date[1]}월 ${date[2]}일`}
         </p>
         <p>
-          <b>예약 시간 |</b> 9:00
+          <b>예약 시간 | </b>
+          {time}
         </p>
       </div>
       <p className='information mb30'>* 선택하신 일정을 확인해주세요.</p>
       <form className='formContainer' onSubmit={(e) => e.preventDefault()}>
         <div className='alignContainer'>
           <label>이름</label>
-          <input className='textInput' type='text' />
+          <input className='textInput' type='text' value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
         </div>
         <div className='alignContainer'>
           <label>휴대폰 번호</label>
-          <input className='textInput' type='text' />
+          <input className='textInput' type='text' value={phoneValue} onChange={(e) => setPhoneValue(e.target.value)} />
         </div>
         <div className='alignContainer'>
           <label className='inputTitle'>예약 종류</label>
-          <ul className='listContainer'>
+          <ul className='listContainer' onChange={(e) => setTypeValue(e.target.id)}>
             <li className='typeList'>
               <input type='radio' id='일반진료' name='type' defaultChecked />
               <label htmlFor='일반진료'>일반진료</label>
@@ -57,7 +90,7 @@ const SecondStep = ({ list, setStep }) => {
       </form>
       <div className='btnContainer'>
         <button onClick={() => setStep(1)}>뒤로 가기</button>
-        <button className='recommend' onClick={() => setStep(3)}>
+        <button className='recommend' onClick={handleNextStep}>
           예약 하기
         </button>
       </div>

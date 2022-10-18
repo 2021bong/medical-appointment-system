@@ -2,7 +2,20 @@ import { Link } from 'react-router-dom';
 import { RiCalendarCheckFill } from 'react-icons/ri';
 import styled from 'styled-components';
 
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { reservationId, name, phoneNumber, type } from '../../../atoms';
+
 const ThirdStep = ({ list }) => {
+  const id = useRecoilValue(reservationId);
+  const typeValue = useRecoilValue(type);
+  const [nameData, setNameDate] = useRecoilState(name);
+  const [phoneNumberData, setPhoneNumberData] = useRecoilState(phoneNumber);
+
+  const resetData = () => {
+    setNameDate('');
+    setPhoneNumberData('');
+  };
+
   return (
     <Main>
       <div className='titleContainer'>
@@ -12,21 +25,21 @@ const ThirdStep = ({ list }) => {
       <div className='alignContainer'>
         <div className='dataContainer'>
           <p className='data'>
-            <b>예약번호 </b> 202210210900
+            <b>예약번호 </b> {id}
           </p>
           <p className='data'>
-            <b>이름 </b> 홍길동
+            <b>이름 </b> {nameData}
           </p>
           <p className='data'>
-            <b>연락처 </b> 010-1234-5678
+            <b>연락처 </b> {phoneNumberData}
           </p>
           <p className='data'>
-            <b>예약 종류 </b> 일반진료
+            <b>예약 종류 </b> {typeValue}
           </p>
         </div>
         <p className='information'>이름이나 예약번호로 조회하실 수 있습니다.</p>
       </div>
-      <Link to='/'>
+      <Link to='/' onClick={resetData}>
         <button className='btn'>확인</button>
       </Link>
     </Main>
