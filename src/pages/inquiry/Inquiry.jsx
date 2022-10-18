@@ -25,7 +25,6 @@ const Inquiry = () => {
   };
 
   const handleInputText = (e) => {
-    console.log(e.target.value);
     setInputValue(e.target.value);
   };
 
@@ -72,9 +71,9 @@ const Inquiry = () => {
         {filteredList &&
           filteredList.map((reservationData) => {
             return reservationData.schedules.map((timeSchedules) => (
-              <div className='boderBottomBox'>
+              <div key={timeSchedules.id} className='boderBottomBox'>
                 <FiUserCheck size='2rem' />
-                <li key={timeSchedules.id} className='infoBox'>
+                <li className='infoBox'>
                   <div>
                     <span className='idNumber'>
                       <b>예약 번호 | </b>
@@ -129,6 +128,18 @@ const Main = styled.div`
   color: ${({ theme }) => theme.text};
   box-shadow: ${({ theme }) => theme.basicShadow};
 
+  .back {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    border: none;
+    color: ${({ theme }) => theme.text};
+
+    &:active {
+      color: ${({ theme }) => theme.red};
+    }
+  }
+
   .titleContainer {
     display: flex;
     justify-content: center;
@@ -152,7 +163,7 @@ const Main = styled.div`
     justify-content: center;
     align-items: center;
     width: 40%;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     padding: 2rem;
     border-radius: 15px;
     font-size: 18px;
@@ -214,18 +225,6 @@ const Main = styled.div`
         border-radius: 5px 0 0 5px;
         outline: none;
       }
-    }
-  }
-
-  .back {
-    position: absolute;
-    top: 2%;
-    left: 2%;
-    border: none;
-    color: ${({ theme }) => theme.text};
-
-    &:active {
-      color: ${({ theme }) => theme.red};
     }
   }
 
