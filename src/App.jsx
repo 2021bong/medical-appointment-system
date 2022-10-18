@@ -36,6 +36,13 @@ const Wrap = styled.div`
   box-shadow: ${({ theme }) => theme.basicShadow};
   color: ${({ theme }) => theme.text};
 
+  @media screen and (max-width: 414px) {
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+    border-radius: 0;
+  }
+
   .greetingContainer {
     margin-bottom: 50px;
     text-align: center;
