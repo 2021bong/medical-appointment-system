@@ -68,6 +68,8 @@ const FirstStep = ({ list, setStep }) => {
       );
   }, [selectedDay, selectedTime]);
 
+  // console.log(selectedTime, 'selectedTime');
+
   const handleSelectedTime = (e) => {
     setSelectedTime(e.target.id);
     selectedDayList?.schedules

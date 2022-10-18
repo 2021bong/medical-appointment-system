@@ -27,13 +27,13 @@ const SecondStep = ({ setList, setStep }) => {
         let newList = [...prev];
         for (let i = 0; i < newList.length; i++) {
           if (newList[i].date === joinedDate) {
+            console.log(newList[i].date, '와', joinedDate);
             newList[i].schedules.push({ id, time, name: nameValue, phoneNumber: phoneValue });
-            return newList;
-          } else {
-            newList.push({ date: date.join('-'), schedules: [{ id, time, name: nameValue, phoneNumber: phoneValue }] });
             return newList;
           }
         }
+        newList.push({ date: date.join('-'), schedules: [{ id, time, name: nameValue, phoneNumber: phoneValue }] });
+        return newList;
       });
       setStep(3);
     } else {
