@@ -7,7 +7,7 @@ import ko from 'date-fns/locale/ko';
 
 import { RiCalendarCheckFill } from 'react-icons/ri';
 import { IoArrowBack } from 'react-icons/io5';
-import { time, findFirstTime } from '../../utils/time';
+import { defaultTime, handleReservationTime, handleSelectedReservationTime } from '../../utils/time';
 
 import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -18,13 +18,26 @@ registerLocale('ko', ko);
 const Reservation = () => {
   const [list, setList] = useState();
   const [startDate, setStartDate] = useState(new Date());
-  const [reservationTime, setReservationTime] = useState();
+  const [selectedTime, setSelectedTime] = useState();
   const [selectedDay, setSelectedDay] = useState(
     `${startDate.getFullYear().toString().slice(2, 4)}-${startDate.getMonth() + 1}-${startDate.getDate()}`,
   );
-  const [selectedDayData, setSelectedDayData] = useState();
+  const [selectedDayList, setSelectedDayList] = useState();
+  const [timeList, setTimeList] = useState();
 
   const today = new Date();
+
+  useEffect(() => {
+    axios('data/reservation.json').then((res) => {
+      setList(res.data.reservations);
+      setSelectedDayList(res.data.reservations.filter((reservation) => reservation.date === selectedDay)[0]);
+      setSelectedTime(
+        handleReservationTime(res.data.reservations.filter((reservation) => reservation.date === selectedDay))
+          .map((timeEl) => timeEl.times.filter((el) => el.checked === true))
+          .flat()[0].time,
+      );
+    });
+  }, []);
 
   useEffect(() => {
     setSelectedDay(
@@ -33,21 +46,26 @@ const Reservation = () => {
   }, [startDate]);
 
   useEffect(() => {
-    setSelectedDayData(list && list.filter((reservation) => reservation.date === selectedDay)[0]);
+    list && setSelectedDayList(list.filter((reservation) => reservation.date === selectedDay)[0]);
   }, [selectedDay]);
 
-  const handleReservationTime = (e) => {
-    setReservationTime(e.target.value);
+  useEffect(() => {
+    selectedDayList && selectedDayList.schedules
+      ? setTimeList(handleReservationTime(selectedDayList.schedules))
+      : setTimeList(defaultTime);
+  }, [selectedDayList]);
+
+  const handleSelectedTime = (e) => {
+    setSelectedTime(e.target.id);
+    selectedDayList?.schedules
+      ? setTimeList(handleSelectedReservationTime(e.target.id, selectedDayList.schedules))
+      : setTimeList(handleSelectedReservationTime(e.target.id, undefined));
   };
 
   const isWeekday = (date) => {
     const day = getDay(date);
     return day !== 0 && day !== 6;
   };
-
-  useEffect(() => {
-    axios('data/reservation.json').then((res) => setList(res.data.reservations));
-  }, []);
 
   return (
     <Main>
@@ -73,39 +91,36 @@ const Reservation = () => {
         />
       </div>
       <form className='formContainer'>
-        {list &&
-          time.map((timeEl) => {
+        {timeList &&
+          timeList.map((timeEl) => {
             return (
               <div className='timeContainer' key={timeEl.timeZone}>
                 <p>{timeEl.timeZone}</p>
                 <div className='timeBox'>
-                  {timeEl.times.map((time) => {
-                    return time === findFirstTime(selectedDayData) ? (
-                      <div key={time} className='radioBox'>
+                  {timeEl.times.map((timeWithDisabled) => {
+                    return timeWithDisabled.disabled ? (
+                      <div key={timeWithDisabled.time} className='radioBox'>
                         <input
                           type='radio'
                           name='time'
-                          id={time}
-                          value={time}
-                          defaultChecked
-                          onChange={handleReservationTime}
+                          id={timeWithDisabled.time}
+                          value={timeWithDisabled.time}
+                          disabled
+                          checked={timeWithDisabled.checked}
                         />
-                        <label htmlFor={time}>{time}</label>
+                        <label htmlFor={timeWithDisabled.time}>{timeWithDisabled.time}</label>
                       </div>
                     ) : (
-                      <div key={time} className='radioBox'>
+                      <div key={timeWithDisabled.time} className='radioBox'>
                         <input
                           type='radio'
                           name='time'
-                          id={time}
-                          value={time}
-                          onChange={handleReservationTime}
-                          disabled={list
-                            .filter((reservation) => reservation.date === selectedDay)[0]
-                            ?.schedules.map((schedule) => schedule.time)
-                            .includes(time)}
+                          id={timeWithDisabled.time}
+                          value={timeWithDisabled.time}
+                          onChange={handleSelectedTime}
+                          checked={timeWithDisabled.checked}
                         />
-                        <label htmlFor={time}>{time}</label>
+                        <label htmlFor={timeWithDisabled.time}>{timeWithDisabled.time}</label>
                       </div>
                     );
                   })}
