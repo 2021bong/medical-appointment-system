@@ -11,12 +11,10 @@ import { defaultTime, handleReservationTime, handleSelectedReservationTime } fro
 
 import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
-import axios from 'axios';
 
 registerLocale('ko', ko);
 
-const Reservation = () => {
-  const [list, setList] = useState();
+const Reservation = ({ list, setList }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState();
   const [selectedDay, setSelectedDay] = useState(
@@ -28,15 +26,13 @@ const Reservation = () => {
   const today = new Date();
 
   useEffect(() => {
-    axios('data/reservation.json').then((res) => {
-      setList(res.data.reservations);
-      setSelectedDayList(res.data.reservations.filter((reservation) => reservation.date === selectedDay)[0]);
+    list && setSelectedDayList(list.filter((reservation) => reservation.date === selectedDay)[0]);
+    list &&
       setSelectedTime(
-        handleReservationTime(res.data.reservations.filter((reservation) => reservation.date === selectedDay))
+        handleReservationTime(list.filter((reservation) => reservation.date === selectedDay))
           .map((timeEl) => timeEl.times.filter((el) => el.checked === true))
           .flat()[0].time,
       );
-    });
   }, []);
 
   useEffect(() => {

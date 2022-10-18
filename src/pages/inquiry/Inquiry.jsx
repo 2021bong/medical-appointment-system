@@ -8,17 +8,13 @@ import { GrSearchAdvanced } from 'react-icons/gr';
 import { FiUserCheck } from 'react-icons/fi';
 import { AiOutlineFrown } from 'react-icons/ai';
 
-const Inquiry = () => {
-  const [list, setList] = useState();
+const Inquiry = ({ list }) => {
   const [filteredList, setFilteredList] = useState();
   const [nameSearch, setNameSearch] = useState(true);
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
-    axios('data/reservation.json').then((res) => {
-      setList(res.data.reservations);
-      setFilteredList(res.data.reservations);
-    });
+    list && setFilteredList(list);
   }, []);
 
   const handleSearchType = (e) => {
@@ -50,11 +46,6 @@ const Inquiry = () => {
           }),
         );
   };
-
-  console.log(
-    filteredList && filteredList.map((reservationData) => reservationData.schedules).flat().length,
-    'filteredList',
-  );
 
   return (
     <Main>
