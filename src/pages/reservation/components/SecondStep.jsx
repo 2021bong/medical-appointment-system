@@ -1,5 +1,4 @@
 import { RiCalendarCheckFill } from 'react-icons/ri';
-
 import styled from 'styled-components';
 
 const SecondStep = ({ list, setStep }) => {
