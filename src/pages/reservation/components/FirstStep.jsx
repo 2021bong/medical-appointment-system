@@ -101,7 +101,6 @@ const FirstStep = ({ list, setStep }) => {
           filterDate={isWeekday}
           onChange={(date) => setStartDate(date)}
           locale='ko'
-          popperPlacement='auto'
         />
       </div>
       <form className='formContainer'>
@@ -249,6 +248,7 @@ const Main = styled.div`
 
     // react-date-picker 커스텀
     .react-datepicker {
+      margin-left: -20px;
       margin-top: -20px;
       border-radius: 15px;
       box-shadow: ${({ theme }) => theme.basicShadow};
