@@ -32,12 +32,6 @@ const FirstStep = ({ list, setStep }) => {
 
   useEffect(() => {
     list && setSelectedDayList(list.filter((reservation) => reservation.date === selectedDay)[0]);
-    list &&
-      setSelectedTime(
-        handleReservationTime(list.filter((reservation) => reservation.date === selectedDay))
-          .map((timeEl) => timeEl.times.filter((el) => el.checked === true))
-          .flat()[0].time,
-      );
   }, []);
 
   useEffect(() => {
@@ -57,6 +51,11 @@ const FirstStep = ({ list, setStep }) => {
   }, [selectedDayList]);
 
   useEffect(() => {
+    timeList &&
+      setSelectedTime(timeList.map((timeEl) => timeEl.times.filter((el) => el.checked === true)).flat()[0].time);
+  }, [timeList]);
+
+  useEffect(() => {
     setRecoilDay(selectedDay.split('-'));
     setRecoilTime(selectedTime);
     selectedTime &&
@@ -67,8 +66,6 @@ const FirstStep = ({ list, setStep }) => {
             : '0' + selectedTime.slice(0, 1) + selectedTime.slice(2, 4)),
       );
   }, [selectedDay, selectedTime]);
-
-  // console.log(selectedTime, 'selectedTime');
 
   const handleSelectedTime = (e) => {
     setSelectedTime(e.target.id);
