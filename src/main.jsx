@@ -10,6 +10,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <GlobalStyle />
       <Router />
     </RecoilRoot>
-    ,
   </React.StrictMode>,
 );
