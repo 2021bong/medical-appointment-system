@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { AiOutlineSmile } from 'react-icons/ai';
+import styled from 'styled-components';
 
 const App = () => {
   return (
