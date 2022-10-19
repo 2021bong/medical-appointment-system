@@ -155,8 +155,8 @@ export const Main = styled.div`
     padding: 10px 0;
     background-color: ${({ theme }) => theme.bg};
     border-radius: 15px;
-    box-shadow: ${({ theme }) => theme.activeShadow};
     overflow: scroll;
+    box-shadow: ${({ theme }) => theme.activeShadow};
 
     .noResult {
       display: flex;

@@ -24,17 +24,17 @@ export const Main = styled.div`
   height: 80vh;
   margin: 5rem auto 0 auto;
   border-radius: 35px;
-  box-shadow: ${({ theme }) => theme.basicShadow};
   color: ${({ theme }) => theme.text};
+  box-shadow: ${({ theme }) => theme.basicShadow};
 
   @media screen and (max-width: 414px) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    height: inherit;
     margin: 0;
     padding: 10px 0 30px 0;
-    height: inherit;
     border-radius: 0;
 
     .back {

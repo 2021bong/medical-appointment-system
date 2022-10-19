@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { GlobalSelectedDay, GlobalSelectedTime, reservationId, name, phoneNumber, type } from '../../../atoms';
-import { RiCalendarCheckFill } from 'react-icons/ri';
-import { Main } from './SecondStep.styled';
 import axios from 'axios';
+import { RiCalendarCheckFill } from 'react-icons/ri';
+import { GlobalSelectedDay, GlobalSelectedTime, reservationId, name, phoneNumber, type } from '../../../atoms';
+import { Main } from './SecondStep.styled';
 
 const SecondStep = ({ setList, setStep }) => {
   const [blackList, setBlackList] = useState();

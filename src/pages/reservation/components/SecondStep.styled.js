@@ -10,17 +10,17 @@ export const Main = styled.div`
   height: 80vh;
   margin: 5rem auto 0 auto;
   border-radius: 35px;
-  box-shadow: ${({ theme }) => theme.basicShadow};
   color: ${({ theme }) => theme.text};
+  box-shadow: ${({ theme }) => theme.basicShadow};
 
   @media screen and (max-width: 414px) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    height: inherit;
     margin: 0;
     padding: 10px 0 30px 0;
-    height: inherit;
     border-radius: 0;
   }
 
@@ -28,9 +28,9 @@ export const Main = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    text-align: center;
-    font-size: 26px;
     color: ${({ theme }) => theme.text};
+    font-size: 26px;
+    text-align: center;
 
     svg {
       margin-right: 13px;
@@ -41,12 +41,12 @@ export const Main = styled.div`
   }
 
   .timeContainer {
-    padding: 15px;
-    border-radius: 10px;
     margin-bottom: 15px;
-    color: #fff;
+    padding: 15px;
     background-color: ${({ theme }) => theme.red};
     border: 1px solid ${({ theme }) => theme.red};
+    border-radius: 10px;
+    color: #fff;
 
     p:first-child {
       margin-bottom: 10px;
@@ -65,8 +65,8 @@ export const Main = styled.div`
         margin-right: 10px;
 
         label {
-          font-weight: 400;
           color: ${({ theme }) => theme.text};
+          font-weight: 400;
         }
       }
     }
@@ -100,9 +100,9 @@ export const Main = styled.div`
       }
 
       .phoneNumberBox {
-        width: 100%;
         display: flex;
         align-items: center;
+        width: 100%;
         margin-bottom: 10px;
       }
 
@@ -124,14 +124,14 @@ export const Main = styled.div`
   }
   .information {
     margin-bottom: 10px;
-    font-size: 14px;
     color: #888;
+    font-size: 14px;
   }
 
   .btnContainer {
-    width: 80%;
     display: flex;
     justify-content: center;
+    width: 80%;
 
     button {
       width: 25%;
@@ -140,8 +140,8 @@ export const Main = styled.div`
       background-color: inherit;
       border: none;
       border-radius: 10px;
-      font-size: 20px;
       color: inherit;
+      font-size: 20px;
       box-shadow: ${({ theme }) => theme.basicShadow};
 
       &:hover {
@@ -165,8 +165,8 @@ export const Main = styled.div`
       color: #fff;
 
       &:hover {
-        color: #fff;
         background-color: ${({ theme }) => theme.red};
+        color: #fff;
       }
       &:active {
         color: #fff;

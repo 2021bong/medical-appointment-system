@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
 import * as theme from './styles/theme';
 
 import App from './App';
 import Reservation from './pages/reservation/Reservation';
 import Inquiry from './pages/inquiry/Inquiry';
-import axios from 'axios';
 
 const Router = () => {
   const [list, setList] = useState();
+
   useEffect(() => {
     axios('data/reservation.json').then((res) => setList(res.data.reservations));
   }, []);

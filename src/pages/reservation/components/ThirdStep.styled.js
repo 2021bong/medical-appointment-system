@@ -10,17 +10,17 @@ export const Main = styled.div`
   height: 80vh;
   margin: 5rem auto 0 auto;
   border-radius: 35px;
-  box-shadow: ${({ theme }) => theme.basicShadow};
   color: ${({ theme }) => theme.text};
+  box-shadow: ${({ theme }) => theme.basicShadow};
 
   @media screen and (max-width: 414px) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    height: inherit;
     margin: 0;
     padding: 10px 0 30px 0;
-    height: inherit;
     border-radius: 0;
   }
 
@@ -28,8 +28,8 @@ export const Main = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-    font-size: 26px;
     color: ${({ theme }) => theme.text};
+    font-size: 26px;
 
     svg {
       margin-right: 13px;
@@ -71,8 +71,8 @@ export const Main = styled.div`
     padding: 5px;
     border: none;
     border-radius: 10px;
-    font-size: 20px;
     color: ${({ theme }) => theme.text};
+    font-size: 20px;
     box-shadow: ${({ theme }) => theme.basicShadow};
 
     &:hover {
@@ -89,7 +89,7 @@ export const Main = styled.div`
 
   .information {
     margin-top: 10px;
-    font-size: 14px;
     color: #888;
+    font-size: 14px;
   }
 `;

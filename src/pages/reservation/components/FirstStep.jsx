@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import getDay from 'date-fns/getDay';
 import { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
-import { useRecoilState } from 'recoil';
 
 import { RiCalendarCheckFill } from 'react-icons/ri';
 import { IoArrowBack } from 'react-icons/io5';
 import { defaultTime, handleReservationTime, handleSelectedReservationTime } from '../../../utils/time';
 import { GlobalSelectedDay, GlobalSelectedTime, reservationId } from '../../../atoms';
-import { Main, CustomDatePicker } from './FirstStep.styled';
 
+import { Main, CustomDatePicker } from './FirstStep.styled';
 import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('ko', ko);

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
-import { RiCalendarCheckFill } from 'react-icons/ri';
-
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { RiCalendarCheckFill } from 'react-icons/ri';
 import { reservationId, name, phoneNumber, type } from '../../../atoms';
 import { Main } from './ThirdStep.styled';
 
