@@ -14,10 +14,6 @@ const Router = () => {
     axios('data/reservation.json').then((res) => setList(res.data.reservations));
   }, []);
 
-  useEffect(() => {
-    console.log(list);
-  }, [list]);
-
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
