@@ -125,11 +125,10 @@ npm run dev
 
 <br />
 
-- 통신, 배포
+- 통신
 
   - axios
 
-  - gh-pages
 
 <br />
 
