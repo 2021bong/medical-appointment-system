@@ -7,11 +7,11 @@ import { Main } from './ThirdStep.styled';
 const ThirdStep = () => {
   const id = useRecoilValue(reservationId);
   const typeValue = useRecoilValue(type);
-  const [nameData, setNameDate] = useRecoilState(name);
+  const [nameData, setNameData] = useRecoilState(name);
   const [phoneNumberData, setPhoneNumberData] = useRecoilState(phoneNumber);
 
   const resetData = () => {
-    setNameDate('');
+    setNameData('');
     setPhoneNumberData('');
   };
 
