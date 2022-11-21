@@ -34,11 +34,7 @@
 
 <br />
 
-## 🚧 프로그램 실행 방법 및 프로젝트 파일 구조
-
-  <br />
-
-### 프로그램 실행 방법
+## 🚧 프로젝트 실행 방법
 
 <br />
 
@@ -50,10 +46,11 @@ git clone https://github.com/2021bong/lululab-hospital-reservation-system.git
 
 <br />
 
-2.  클론 받은 폴더로 이동해 패키지를 다운 받습니다.
+2.  클론 받은 폴더로 이동해 패키지를 다운 받습니다. (Node.js가 필요합니다.)
 
 ```
-npm i
+cd lululab-hospital-reservation-system
+npm install
 ```
 
 <br />
@@ -66,69 +63,83 @@ npm run dev
 
 <br />
 
-4. 브라우저가 켜지고 프로젝트를 확인 할 수 있습니다.
-   <br />
-   <br />
-   <br />
+4. 해당 주소에서 프로젝트를 확인할 수 있습니다.
 
-### 프로젝트 파일 구조
+```
+http://localhost:5173
+```
 
-- `public/data`: Mock 데이터 폴더
-- `src/pages/reservation`: 예약 페이지 파일 폴더
-- `src/pages/inquiry`: 예약 조회 페이지 파일 폴더
-- `src/utils`: 함수 파일 폴더
-- `src/styles`: 전역 스타일 폴더
-  <br />
   <br />
 
 ---
 
 <br />
 
-## 🛠 적용 기술
+## 🛠 사용 기술 및 프로젝트 구조
 
 <br />
 
-- JavaScript
+- 사용 기술
 
-- React.js
+```
+Vite
 
-<br />
+React.js
+react-router-dom
+recoil
 
-- React 관련 라이브러리
+styled-components
+styled-reset
 
-  - react-router-dom
-
-  - recoil
-
-<br />
-
-- 스타일링
-
-  - styled-components
-
-  - styled-reset
+react-icons
+react-datepicker
+date-fns
+axios
+```
 
 <br />
 
-- 아이콘
+- 프로젝트 구조
 
-  - react-icons
-
-<br />
-
-- 달력
-
-  - react-datepicker
-
-  - date-fns
-
-<br />
-
-- 통신
-
-  - axios
-
+```
+├── .gitignore
+├── .prettierrc
+├── PULL_REQUEST_TEMPLATE.md
+├── README.md
+├── index.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── public
+│   ├── data
+│   │   ├── blackList.json
+│   │   └── reservation.json
+│   └── hospital.png
+├── src
+│   ├── App.jsx
+│   ├── Router.jsx
+│   ├── atoms.js
+│   ├── main.jsx
+│   ├── pages
+│   │   ├── inquiry
+│   │   │   ├── Inquiry.jsx
+│   │   │   └── Inquiry.styled.js
+│   │   └── reservation
+│   │       ├── Reservation.jsx
+│   │       └── components
+│   │           ├── FirstStep.jsx
+│   │           ├── FirstStep.styled.js
+│   │           ├── SecondStep.jsx
+│   │           ├── SecondStep.styled.js
+│   │           ├── ThirdStep.jsx
+│   │           └── ThirdStep.styled.js
+│   ├── styles
+│   │   ├── GlobalStyle.js
+│   │   └── theme.js
+│   └── utils
+│       └── time.js
+└── vite.config.js
+```
 
 <br />
 
