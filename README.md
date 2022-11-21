@@ -66,7 +66,7 @@ npm run dev
 4. 해당 주소에서 프로젝트를 확인할 수 있습니다.
 
 ```
-http://localhost:5173
+http://localhost:5173/lululab-hospital-reservation-system/
 ```
 
   <br />
