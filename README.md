@@ -1,36 +1,4 @@
-# 🏥 Lululab hospital reservation system
-
-### JUSTCODE 6기 기업협업 개인과제 - 룰루랩 병원 예약 시스템
-
-<br />
-
-### **[📌 배포 링크](https://2021bong.github.io/lululab-hospital-reservation-system/)**
-
-<br />
-
-## 💡 과제 설명
-
-1. 해당 월에 예약 가능한 목록을 보여줍니다.
-2. 예약자, 이름, 예약 시간, 예약 종류를 이용하여 예약합니다.
-3. 중복 예약은 불가합니다.
-4. 노쇼 예약자는 예약이 불가합니다.
-5. 예약 번호나 예약자 이름으로 예약 목록 조회가 가능해야 합니다.
-
-<br />
-
----
-
-<br />
-
-## 🗓 개발 기간
-
-<br />
-
-**기간** : 2022.10.15 ~ 2022.10.19
-<br />
-<br />
-
----
+# 🏥 Medical Appointment System
 
 <br />
 
@@ -41,7 +9,7 @@
 1.  터미널을 키고 원하는 폴더 경로로 이동해 레포지토리를 클론 받습니다.
 
 ```
-git clone https://github.com/2021bong/lululab-hospital-reservation-system.git
+git clone https://github.com/2021bong/medical-appointment-system.git
 ```
 
 <br />
@@ -49,7 +17,7 @@ git clone https://github.com/2021bong/lululab-hospital-reservation-system.git
 2.  클론 받은 폴더로 이동해 패키지를 다운 받습니다. (Node.js가 필요합니다.)
 
 ```
-cd lululab-hospital-reservation-system
+cd medical-appointment-system
 npm install
 ```
 
@@ -66,7 +34,7 @@ npm run dev
 4. 해당 주소에서 프로젝트를 확인할 수 있습니다.
 
 ```
-http://localhost:5173/lululab-hospital-reservation-system/
+http://localhost:5173/medical-appointment-system/
 ```
 
   <br />
@@ -83,18 +51,9 @@ http://localhost:5173/lululab-hospital-reservation-system/
 
 ```
 Vite
-
 React.js
-react-router-dom
 recoil
 
-styled-components
-styled-reset
-
-react-icons
-react-datepicker
-date-fns
-axios
 ```
 
 <br />

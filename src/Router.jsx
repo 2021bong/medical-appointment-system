@@ -17,7 +17,7 @@ const Router = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename='/lululab-hospital-reservation-system'>
+      <BrowserRouter basename='/medical-appointment-system'>
         <Routes>
           <Route path='/' element={<App />} />
           <Route path='/reservation' element={<Reservation list={list} setList={setList} />} />
