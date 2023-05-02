@@ -59,8 +59,8 @@ export const Main = styled.div`
   .titleContainer {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-bottom: 15px;
+    align-items: flex-end;
+    margin-bottom: 30px;
     font-size: 26px;
     text-align: center;
 
@@ -119,20 +119,7 @@ export const Main = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-
-      button {
-        min-width: 80px;
-        height: inherit;
-        padding: 10px;
-        border: none;
-        border-radius: 0 5px 5px 0;
-        font-weight: 500;
-        box-shadow: ${({ theme }) => theme.basicShadow};
-
-        &:active {
-          box-shadow: ${({ theme }) => theme.activeShadow};
-        }
-      }
+      margin-top: 20px;
 
       .searchInput {
         width: 100%;
@@ -141,6 +128,30 @@ export const Main = styled.div`
         border: none;
         border-radius: 5px 0 0 5px;
         outline: none;
+      }
+
+      .infoInputContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin: 5px auto;
+        width: 100%;
+
+        .searchInput {
+          width: 100%;
+          margin: 0 auto;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          outline: none;
+        }
+
+        .infoBtn {
+          width: 30%;
+          margin-top: 10px;
+          border-radius: 5px;
+        }
       }
     }
   }
@@ -175,7 +186,7 @@ export const Main = styled.div`
       }
     }
 
-    .boderBottomBox {
+    .listItemBox {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -216,5 +227,27 @@ export const Main = styled.div`
         }
       }
     }
+  }
+
+  .btn {
+    min-width: 80px;
+    height: inherit;
+    padding: 10px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: ${({ theme }) => theme.basicShadow};
+
+    &:active {
+      box-shadow: ${({ theme }) => theme.activeShadow};
+    }
+  }
+
+  .backBtn {
+    min-width: 100px;
+    max-height: 50px;
+    margin-top: 30px;
+    border-radius: 5px;
   }
 `;

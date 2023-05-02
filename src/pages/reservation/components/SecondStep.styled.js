@@ -103,7 +103,6 @@ export const Main = styled.div`
         display: flex;
         align-items: center;
         width: 100%;
-        margin-bottom: 10px;
       }
 
       &:nth-child(2),

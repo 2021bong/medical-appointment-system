@@ -16,7 +16,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 registerLocale('ko', ko);
 
 const FirstStep = ({ list, setStep }) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const today = new Date();
+  const [startDate, setStartDate] = useState(today);
   const [selectedDay, setSelectedDay] = useState(
     `${startDate.getFullYear().toString().slice(2, 4)}-${startDate.getMonth() + 1}-${startDate.getDate()}`,
   );
@@ -27,17 +28,15 @@ const FirstStep = ({ list, setStep }) => {
   const [selectedDayList, setSelectedDayList] = useState();
   const [timeList, setTimeList] = useState();
 
-  const today = new Date();
-
   useEffect(() => {
     list && setSelectedDayList(list.filter((reservation) => reservation.date === selectedDay)[0]);
   }, []);
 
-  useEffect(() => {
-    setSelectedDay(
-      `${startDate.getFullYear().toString().slice(2, 4)}-${startDate.getMonth() + 1}-${startDate.getDate()}`,
-    );
-  }, [startDate]);
+  // useEffect(() => {
+  //   setSelectedDay(
+  //     `${startDate.getFullYear().toString().slice(2, 4)}-${startDate.getMonth() + 1}-${startDate.getDate()}`,
+  //   );
+  // }, [startDate]);
 
   useEffect(() => {
     list && setSelectedDayList(list.filter((reservation) => reservation.date === selectedDay)[0]);
@@ -93,7 +92,7 @@ const FirstStep = ({ list, setStep }) => {
           closeOnScroll={true}
           selected={startDate}
           minDate={today}
-          maxDate={new Date(today.getFullYear(), today.getMonth() + 1, 15)}
+          maxDate={new Date(today.getFullYear(), today.getMonth() + 1)}
           filterDate={isWeekday}
           onChange={(date) => setStartDate(date)}
           locale='ko'

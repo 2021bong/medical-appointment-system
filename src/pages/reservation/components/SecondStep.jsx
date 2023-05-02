@@ -36,8 +36,19 @@ const SecondStep = ({ setList, setStep }) => {
       });
       setStep(3);
     } else {
-      window.alert('이름과 전화번호를 모두 입력해주세요.');
+      alert('이름과 전화번호를 모두 입력해주세요.');
     }
+  };
+
+  const setPhoneNumberValue = (e) => {
+    if (e.target.value.length > 13) {
+      return;
+    }
+    const regex = /[^0-9-]/g;
+    if (regex.test(e.target.value)) {
+      return;
+    }
+    setPhoneValue(e.target.value.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`));
   };
 
   useEffect(() => {
@@ -71,12 +82,12 @@ const SecondStep = ({ setList, setStep }) => {
             <label>휴대폰 번호</label>
             <input
               className='textInput'
+              placeholder='숫자만 입력해주세요.'
               type='text'
               value={phoneValue}
-              onChange={(e) => setPhoneValue(e.target.value)}
+              onChange={setPhoneNumberValue}
             />
           </div>
-          <p className='information mb0'>* '-' 없이 번호만 입력해주세요.</p>
         </div>
         <div className='alignContainer'>
           <label className='inputTitle'>예약 종류</label>

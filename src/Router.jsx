@@ -7,6 +7,7 @@ import * as theme from './styles/theme';
 import App from './App';
 import Reservation from './pages/reservation/Reservation';
 import Inquiry from './pages/inquiry/Inquiry';
+import InquiryResult from './pages/inquiry/InquiryResult';
 
 const Router = () => {
   const [list, setList] = useState();
@@ -21,7 +22,8 @@ const Router = () => {
         <Routes>
           <Route path='/' element={<App />} />
           <Route path='/reservation' element={<Reservation list={list} setList={setList} />} />
-          <Route path='/inquiry' element={<Inquiry list={list} />} />
+          <Route path='/inquiry' element={<Inquiry />} />
+          <Route path='/inquiry-result' element={<InquiryResult list={list} />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
