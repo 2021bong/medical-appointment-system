@@ -1,18 +1,15 @@
 import { atom } from 'recoil';
+import dayjs from 'dayjs';
 
-export const GlobalSelectedDay = atom({
-  key: 'GlobalSelectedDay',
-  default: '',
+const stringDate = dayjs(new Date()).format('YY-M-D');
+export const reservationDay = atom({
+  key: 'reservationDay',
+  default: stringDate,
 });
 
-export const GlobalSelectedTime = atom({
-  key: 'GlobalSelectedTime',
-  default: '',
-});
-
-export const reservationId = atom({
-  key: 'reservationId',
-  default: '',
+export const reservationTime = atom({
+  key: 'reservationTime',
+  default: '9:00',
 });
 
 export const name = atom({
@@ -23,9 +20,4 @@ export const name = atom({
 export const phoneNumber = atom({
   key: 'phoneNumber',
   default: '',
-});
-
-export const type = atom({
-  key: 'type',
-  default: '일반진료',
 });

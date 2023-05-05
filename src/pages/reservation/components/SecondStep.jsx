@@ -1,39 +1,48 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import axios from 'axios';
+
 import { RiCalendarCheckFill } from 'react-icons/ri';
-import { GlobalSelectedDay, GlobalSelectedTime, reservationId, name, phoneNumber, type } from '../../../atoms';
+import { reservationDay, reservationTime, name, phoneNumber } from '../../../atoms';
 import { Main } from './SecondStep.styled';
 
-const SecondStep = ({ setList, setStep }) => {
-  const [blackList, setBlackList] = useState();
+const SecondStep = ({ setStep }) => {
   const [nameValue, setNameValue] = useRecoilState(name);
   const [phoneValue, setPhoneValue] = useRecoilState(phoneNumber);
-  const [, setTypeValue] = useRecoilState(type);
-  const date = useRecoilValue(GlobalSelectedDay);
-  const time = useRecoilValue(GlobalSelectedTime);
-  const id = useRecoilValue(reservationId);
+  const [typeValue, setTypeValue] = useState('일반진료');
+  const [year, month, day] = useRecoilValue(reservationDay).split('-');
+  const time = useRecoilValue(reservationTime);
 
   const handleNextStep = () => {
-    const joinedDate = date.join('-');
     if (nameValue && phoneNumber) {
-      if (
-        blackList.filter((info) => info.name === nameValue).length !== 0 &&
-        blackList.filter((info) => info.phoneNumber === phoneValue).length !== 0
-      ) {
-        return window.alert('인터넷으로 예약이 불가한 고객입니다.\n병원으로 문의하시기 바랍니다.');
-      }
-      setList((prev) => {
-        let newList = [...prev];
-        for (let i = 0; i < newList.length; i++) {
-          if (newList[i].date === joinedDate) {
-            newList[i].schedules.push({ id, time, name: nameValue, phoneNumber: phoneValue });
-            return newList;
-          }
-        }
-        newList.push({ date: date.join('-'), schedules: [{ id, time, name: nameValue, phoneNumber: phoneValue }] });
-        return newList;
-      });
+      /**
+       * TODO
+       * blackList 유저인지 확인 -> 서버에 기능 구현 필요
+       */
+      // if (
+      //   blackList.filter((info) => info.name === nameValue).length !== 0 &&
+      //   blackList.filter((info) => info.phoneNumber === phoneValue).length !== 0
+      // ) {
+      //   return window.alert('인터넷으로 예약이 불가한 고객입니다.\n병원으로 문의하시기 바랍니다.');
+      // }
+      /**
+       * TODO
+       * 서버로 유저 데이터 전송
+       * 리액트 쿼리를 쓰면 이 컴포넌트 안에서 통신하고 다른 컴포넌트에서 내용을 쓸 수 있으려나...?
+       * 리액트 쿼리로 통신 코드 분리 가능한지 확인(2step <-> 3step)
+       *
+       * + 성능 최적화
+       */
+      // setList((prev) => {
+      //   let newList = [...prev];
+      //   for (let i = 0; i < newList.length; i++) {
+      //     if (newList[i].date === joinedDate) {
+      //       newList[i].schedules.push({ id, time, name: nameValue, phoneNumber: phoneValue });
+      //       return newList;
+      //     }
+      //   }
+      //   newList.push({ date: date.join('-'), schedules: [{ id, time, name: nameValue, phoneNumber: phoneValue }] });
+      //   return newList;
+      // });
       setStep(3);
     } else {
       alert('이름과 전화번호를 모두 입력해주세요.');
@@ -41,19 +50,13 @@ const SecondStep = ({ setList, setStep }) => {
   };
 
   const setPhoneNumberValue = (e) => {
-    if (e.target.value.length > 13) {
-      return;
-    }
+    if (e.target.value.length > 13) return;
+
     const regex = /[^0-9-]/g;
-    if (regex.test(e.target.value)) {
-      return;
-    }
+    if (regex.test(e.target.value)) return;
+
     setPhoneValue(e.target.value.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`));
   };
-
-  useEffect(() => {
-    axios('data/blackList.json').then((res) => setBlackList(res.data.blackList));
-  }, []);
 
   return (
     <Main>
@@ -64,7 +67,7 @@ const SecondStep = ({ setList, setStep }) => {
       <div className='timeContainer'>
         <p>
           <b>예약 날짜 | </b>
-          {`${date[0]}년 ${date[1]}월 ${date[2]}일`}
+          {`${year}년 ${month}월 ${day}일`}
         </p>
         <p>
           <b>예약 시간 | </b>

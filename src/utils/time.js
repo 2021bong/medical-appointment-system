@@ -27,70 +27,44 @@ export const defaultTime = [
   },
 ];
 
-export const handleReservationTime = (times) => {
-  const disableTime = times.map((reservation) => reservation.time);
-  const timeList = defaultTime.map((timeEl) => {
+/***
+ * @param {string[]} resevedTimeList
+ * ['9:00', '10:30']
+ */
+export const makeAvailableTimeList = (resevedTimeList) => {
+  if (!resevedTimeList || !resevedTimeList.length) {
+    return defaultTime;
+  }
+
+  resevedTimeList = resevedTimeList[0].schedules;
+  const filteredTimeList = defaultTime.map((timeEl) => {
     return {
       timeZone: timeEl.timeZone,
-      times: timeEl.times.map((time) => {
-        if (disableTime.includes(time.time)) {
-          return { time: time.time, disabled: true, checked: false };
-        } else {
-          return { time: time.time, disabled: false, checked: false };
-        }
-      }),
+      times: timeEl.times.map((time) =>
+        resevedTimeList.includes(time.time)
+          ? { time: time.time, disabled: true, checked: false }
+          : { time: time.time, disabled: false, checked: false },
+      ),
     };
   });
-  let smallI = timeList.length;
-  let smallJ = timeList[0].times.length;
-  for (let i = 0; i < timeList.length; i++) {
-    for (let j = 0; j < timeList[i].times.length; j++) {
-      if (!timeList[i].times[j].disabled) {
-        if (i < smallI) {
-          smallI = i;
-          smallJ = j;
-          if (smallI !== 0) {
-            smallJ = j;
-          }
-        }
+  const defaultCheckInfo = { timeZone: 0, time: 0, find: false };
+  for (let i = defaultCheckInfo.time; i < filteredTimeList[0].times.length; i++) {
+    if (!filteredTimeList[0].times[i].disabled) {
+      filteredTimeList[0].times[i].checked = true;
+      defaultCheckInfo.find = true;
+      break;
+    } else if (!filteredTimeList[0].times[0].disabled && i === 0) {
+      filteredTimeList[0].times[0].checked = false;
+    }
+  }
+  if (!defaultCheckInfo.find) {
+    defaultCheckInfo.timeZone = 1;
+    for (let i = defaultCheckInfo.time; i < filteredTimeList[1].times.length; i++) {
+      if (!filteredTimeList[1].times[i].disabled) {
+        filteredTimeList[1].times[i].checked = true;
+        break;
       }
     }
   }
-  timeList[smallI].times[smallJ] = { ...timeList[smallI].times[smallJ], checked: true };
-  return timeList;
-};
-
-export const handleSelectedReservationTime = (target, times) => {
-  if (!times) {
-    return defaultTime.map((timeEl) => {
-      return {
-        timeZone: timeEl.timeZone,
-        times: timeEl.times.map((time) => {
-          if (target === time.time) {
-            return { time: time.time, disabled: false, checked: true };
-          } else {
-            return { time: time.time, disabled: false, checked: false };
-          }
-        }),
-      };
-    });
-  }
-  const disableTime = times.map((reservation) => reservation.time);
-  const timeList = defaultTime.map((timeEl) => {
-    return {
-      timeZone: timeEl.timeZone,
-      times: timeEl.times.map((time) => {
-        if (disableTime.includes(time.time)) {
-          return { time: time.time, disabled: true, checked: false };
-        } else {
-          if (target === time.time) {
-            return { time: time.time, disabled: false, checked: true };
-          } else {
-            return { time: time.time, disabled: false, checked: false };
-          }
-        }
-      }),
-    };
-  });
-  return timeList;
+  return filteredTimeList;
 };
