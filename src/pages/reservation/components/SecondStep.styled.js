@@ -26,30 +26,48 @@ export const Main = styled.div`
 
   .titleContainer {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 20px;
-    color: ${({ theme }) => theme.text};
-    font-size: 26px;
-    text-align: center;
 
-    svg {
-      margin-right: 13px;
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+      color: ${({ theme }) => theme.text};
+      font-size: 26px;
+      text-align: center;
+
+      svg {
+        margin-right: 13px;
+      }
+      h2 {
+        font-weight: 700;
+      }
     }
-    h2 {
-      font-weight: 700;
+
+    .timeContainer {
+      margin-bottom: 15px;
+      padding: 15px;
+      background-color: ${({ theme }) => theme.red};
+      border: 1px solid ${({ theme }) => theme.red};
+      border-radius: 10px;
+      color: #fff;
+
+      p > span {
+        font-weight: 700;
+      }
+
+      p:first-child {
+        margin-bottom: 10px;
+      }
     }
-  }
 
-  .timeContainer {
-    margin-bottom: 15px;
-    padding: 15px;
-    background-color: ${({ theme }) => theme.red};
-    border: 1px solid ${({ theme }) => theme.red};
-    border-radius: 10px;
-    color: #fff;
-
-    p:first-child {
+    .information {
       margin-bottom: 10px;
+      color: #888;
+      font-size: 14px;
     }
   }
 
@@ -66,65 +84,65 @@ export const Main = styled.div`
 
         label {
           color: ${({ theme }) => theme.text};
-          font-weight: 400;
         }
       }
     }
 
-    .alignContainer {
+    .flexColumn {
       display: flex;
       align-items: center;
       margin-bottom: 20px;
       padding-bottom: 20px;
       border-bottom: 1px solid #ccc;
 
-      &:last-child {
+      &:last-of-type {
         border-bottom: none;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
       }
 
-      label {
-        font-weight: 700;
-
-        &:first-child {
-          width: 120px;
-          margin-right: 10px;
-        }
-      }
-
-      .textInput {
-        width: 100%;
-        padding: 5px;
-        border: none;
-        border-radius: 10px;
-        outline: none;
-      }
-
-      .phoneNumberBox {
+      .flexRow {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        width: 100%;
-      }
-
-      &:nth-child(2),
-      &:nth-child(3),
-      &:nth-child(4) {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .inputTitle {
-        margin-bottom: 10px;
-      }
-
-      .memo {
         width: 100%;
       }
     }
   }
-  .information {
-    margin-bottom: 10px;
-    color: #888;
-    font-size: 14px;
+
+  .boldLabel {
+    font-weight: 700;
+
+    &:first-child {
+      min-width: 85px;
+      margin-right: 10px;
+    }
+  }
+
+  .note {
+    transform: translateY(-10px);
+  }
+
+  .textInput {
+    width: 100%;
+    min-width: 260px;
+    padding: 5px 5px 5px 8px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+  }
+
+  .flexStart {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .information {
+      position: relative;
+      margin-top: 10px;
+      color: #888;
+      font-size: 14px;
+    }
   }
 
   .btnContainer {
@@ -176,9 +194,5 @@ export const Main = styled.div`
 
   .mb0 {
     margin-bottom: 0;
-  }
-
-  .mb30 {
-    margin-bottom: 30px;
   }
 `;

@@ -7,13 +7,14 @@ import { Main } from './SecondStep.styled';
 
 const SecondStep = ({ setStep }) => {
   const [nameValue, setNameValue] = useRecoilState(name);
+  const [birthDayValue, setBirthDayValue] = useState('');
   const [phoneValue, setPhoneValue] = useRecoilState(phoneNumber);
   const [typeValue, setTypeValue] = useState('일반진료');
   const [year, month, day] = useRecoilValue(reservationDay).split('-');
   const time = useRecoilValue(reservationTime);
 
   const handleNextStep = () => {
-    if (nameValue && phoneNumber) {
+    if (nameValue && birthDayValue && phoneNumber) {
       /**
        * TODO
        * blackList 유저인지 확인 -> 서버에 기능 구현 필요
@@ -45,8 +46,15 @@ const SecondStep = ({ setStep }) => {
       // });
       setStep(3);
     } else {
-      alert('이름과 전화번호를 모두 입력해주세요.');
+      alert('이름과 생년월일, 전화번호를 모두 입력해주세요.');
     }
+  };
+
+  const handleBirthDayValue = (e) => {
+    if (e.target.value.length > 8) {
+      return;
+    }
+    setBirthDayValue(e.target.value);
   };
 
   const setPhoneNumberValue = (e) => {
@@ -61,28 +69,42 @@ const SecondStep = ({ setStep }) => {
   return (
     <Main>
       <div className='titleContainer'>
-        <RiCalendarCheckFill size='2rem' />
-        <h2>진료 예약</h2>
+        <div className='title'>
+          <RiCalendarCheckFill size='2rem' />
+          <h2>진료 예약</h2>
+        </div>
+        <div className='timeContainer'>
+          <p>
+            <span>예약 날짜 | </span>
+            {`${year}년 ${month}월 ${day}일`}
+          </p>
+          <p>
+            <span>예약 시간 | </span>
+            {time}
+          </p>
+        </div>
+        <p className='information'>* 선택하신 일정을 확인해주세요.</p>
       </div>
-      <div className='timeContainer'>
-        <p>
-          <b>예약 날짜 | </b>
-          {`${year}년 ${month}월 ${day}일`}
-        </p>
-        <p>
-          <b>예약 시간 | </b>
-          {time}
-        </p>
-      </div>
-      <p className='information mb30'>* 선택하신 일정을 확인해주세요.</p>
       <form className='formContainer' onSubmit={(e) => e.preventDefault()}>
-        <div className='alignContainer'>
-          <label>이름</label>
+        <div className='flexColumn'>
+          <label className='boldLabel'>이름</label>
           <input className='textInput' type='text' value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
         </div>
-        <div className='alignContainer'>
-          <div className='phoneNumberBox'>
-            <label>휴대폰 번호</label>
+        <div className='flexColumn'>
+          <div className='flexRow'>
+            <label className='boldLabel'>생년월일</label>
+            <input
+              className='textInput'
+              type='text'
+              placeholder='생년월일 8자리를 입력해주세요. (예 : 19990101)'
+              value={birthDayValue}
+              onChange={handleBirthDayValue}
+            />
+          </div>
+        </div>
+        <div className='flexColumn'>
+          <div className='flexRow'>
+            <label className='boldLabel'>휴대폰 번호</label>
             <input
               className='textInput'
               placeholder='숫자만 입력해주세요.'
@@ -92,33 +114,37 @@ const SecondStep = ({ setStep }) => {
             />
           </div>
         </div>
-        <div className='alignContainer'>
-          <label className='inputTitle'>예약 종류</label>
-          <ul className='listContainer' onChange={(e) => setTypeValue(e.target.id)}>
-            <li className='typeList'>
-              <input type='radio' id='일반진료' name='type' defaultChecked />
-              <label htmlFor='일반진료'>일반진료</label>
-            </li>
-            <li className='typeList'>
-              <input type='radio' id='정기검진' name='type' />
-              <label htmlFor='정기검진'>정기검진</label>
-            </li>
-            <li className='typeList'>
-              <input type='radio' id='정밀검사' name='type' />
-              <label htmlFor='정밀검사'>정밀검사</label>
-            </li>
-            <li className='typeList'>
-              <input type='radio' id='기타' name='type' />
-              <label htmlFor='기타'>기타</label>
-            </li>
-          </ul>
+        <div className='flexColumn'>
+          <div className='flexRow'>
+            <label className='boldLabel'>예약 종류</label>
+            <ul className='listContainer' onChange={(e) => setTypeValue(e.target.id)}>
+              <li className='typeList'>
+                <input type='radio' id='일반진료' name='type' defaultChecked />
+                <label htmlFor='일반진료'>일반진료</label>
+              </li>
+              <li className='typeList'>
+                <input type='radio' id='정기검진' name='type' />
+                <label htmlFor='정기검진'>정기검진</label>
+              </li>
+              <li className='typeList'>
+                <input type='radio' id='정밀검사' name='type' />
+                <label htmlFor='정밀검사'>정밀검사</label>
+              </li>
+              <li className='typeList'>
+                <input type='radio' id='기타' name='type' />
+                <label htmlFor='기타'>기타</label>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div className='alignContainer'>
-          <label htmlFor='비고' className='inputTitle'>
-            비고
-          </label>
-          <p className='information'>* 전달사항이 있다면 적어주세요.</p>
-          <input className='textInput' type='text' id='비고' />
+        <div className='flexColumn'>
+          <div className='flexRow'>
+            <label className='boldLabel note'>비고</label>
+            <div className='flexStart'>
+              <input className='textInput' type='text' id='비고' />
+              <p className='information'>* 전달사항이 있다면 적어주세요.</p>
+            </div>
+          </div>
         </div>
       </form>
       <div className='btnContainer'>
