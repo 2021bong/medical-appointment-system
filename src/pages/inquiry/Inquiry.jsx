@@ -6,36 +6,33 @@ import { GrSearchAdvanced } from 'react-icons/gr';
 import { Main } from './Inquiry.styled';
 
 const Inquiry = () => {
-  const [infoSearch, setInfoSearch] = useState(true);
+  const [searchType, setSearchType] = useState(1);
   const [inputValue, setInputValue] = useState('');
-  const [birthValue, setBirthValue] = useState('');
+  const [phoneValue, setphoneValue] = useState('');
   const { pathname } = useLocation();
 
   const handleSearchType = (e) => {
-    setInfoSearch(e.target.id === 'infoSearch' ? true : false);
+    setSearchType(e.target.id === 'sType1' ? 1 : 2);
     setInputValue('');
-    setBirthValue('');
+    setphoneValue('');
   };
 
-  const handleInputText = (e) => {
+  const handleInputValue = (e) => {
     setInputValue(e.target.value);
   };
 
-  const handleBirthText = (e) => {
-    const regex = /[^0-9]/g;
-    if (regex.test(e.target.value)) {
-      alert('숫자만 입력 가능합니다.');
-      return;
-    }
-    if (e.target.value.length > 8) {
-      return;
-    }
-    setBirthValue(e.target.value);
+  const handlePhoneValue = (e) => {
+    if (e.target.value.length > 13) return;
+
+    const regex = /[^0-9-]/g;
+    if (regex.test(e.target.value)) return;
+
+    setphoneValue(e.target.value.replace(/[^0-9]/g, '').replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`));
   };
 
   useEffect(() => {
     setInputValue('');
-    setBirthValue('');
+    setphoneValue('');
   }, [pathname]);
 
   /**
@@ -58,42 +55,43 @@ const Inquiry = () => {
       </div>
       <div className='searchContainer'>
         <ul className='searchBox'>
-          <li className={infoSearch ? 'select' : undefined} id='infoSearch' onClick={handleSearchType}>
+          <li className={searchType === 1 ? 'select' : undefined} id='sType1' onClick={handleSearchType}>
             개인 정보로 찾기
           </li>
-          <li className={!infoSearch ? 'select' : undefined} id='idSearch' onClick={handleSearchType}>
+          <li className={searchType === 2 ? 'select' : undefined} id='sType2' onClick={handleSearchType}>
             접수번호로 찾기
           </li>
         </ul>
         <form className='formContainer' onSubmit={(e) => e.preventDefault()}>
-          {infoSearch ? (
+          {searchType === 1 && (
             <div className='infoInputContainer'>
               <input
                 type='text'
                 placeholder='이름을 적어주세요.'
                 className='searchInput'
                 value={inputValue}
-                onChange={handleInputText}
+                onChange={handleInputValue}
               />
               <input
                 type='text'
-                placeholder='생년월일 8자리를 적어주세요. (예 : 19990101)'
+                placeholder='휴대폰번호를 적어주세요. (숫자만 입력해주세요.)'
                 className='searchInput'
-                value={birthValue}
-                onChange={handleBirthText}
+                value={phoneValue}
+                onChange={handlePhoneValue}
               />
               <button className='btn infoBtn' onClick={onSearch}>
                 검색
               </button>
             </div>
-          ) : (
+          )}
+          {searchType === 2 && (
             <>
               <input
                 type='text'
                 placeholder='접수번호를 적어주세요.'
                 className='searchInput'
                 value={inputValue}
-                onChange={handleInputText}
+                onChange={handleInputValue}
               />
               <button className='btn' onClick={onSearch}>
                 검색

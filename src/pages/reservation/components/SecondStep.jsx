@@ -17,6 +17,7 @@ const SecondStep = ({ setStep }) => {
     if (nameValue && birthDayValue && phoneNumber) {
       /**
        * TODO
+       * 생년월일 & 핸드폰 번호 맞게 입력했는지 유효성 검사 필요
        * blackList 유저인지 확인 -> 서버에 기능 구현 필요
        */
       // if (
@@ -57,7 +58,7 @@ const SecondStep = ({ setStep }) => {
     setBirthDayValue(e.target.value);
   };
 
-  const setPhoneNumberValue = (e) => {
+  const handlePhoneValue = (e) => {
     if (e.target.value.length > 13) return;
 
     const regex = /[^0-9-]/g;
@@ -110,7 +111,7 @@ const SecondStep = ({ setStep }) => {
               placeholder='숫자만 입력해주세요.'
               type='text'
               value={phoneValue}
-              onChange={setPhoneNumberValue}
+              onChange={handlePhoneValue}
             />
           </div>
         </div>
