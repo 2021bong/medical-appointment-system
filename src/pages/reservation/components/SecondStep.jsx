@@ -130,12 +130,12 @@ const SecondStep = ({ setStep }) => {
                   <label htmlFor='일반진료'>일반진료</label>
                 </li>
                 <li className='typeList'>
-                  <input type='radio' id='정기검진' name='type' />
-                  <label htmlFor='정기검진'>정기검진</label>
+                  <input type='radio' id='건강검진' name='type' />
+                  <label htmlFor='건강검진'>건강검진</label>
                 </li>
                 <li className='typeList'>
-                  <input type='radio' id='정밀검사' name='type' />
-                  <label htmlFor='정밀검사'>정밀검사</label>
+                  <input type='radio' id='서류발급' name='type' />
+                  <label htmlFor='서류발급'>서류발급</label>
                 </li>
                 <li className='typeList'>
                   <input type='radio' id='기타' name='type' />

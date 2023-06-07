@@ -7,7 +7,7 @@ const App = () => {
     <Wrap>
       <div className='greetingContainer'>
         <AiOutlineSmile size='10rem' />
-        <h2 className='greeting'>안녕하세요, 룰루 병원입니다.</h2>
+        <h2 className='greeting'>안녕하세요, 스마일 병원입니다.</h2>
       </div>
       <div className='btnContainer'>
         <Link to='reservation'>

@@ -10,6 +10,8 @@ import ko from 'date-fns/locale/ko';
 import { RiCalendarCheckFill } from 'react-icons/ri';
 import { IoArrowBack } from 'react-icons/io5';
 import { defaultTime, makeAvailableTimeList } from '../../../utils/time';
+import checkHoliday from '../../../utils/checkHoliday';
+import getMaxDate from '../../../utils/getMaxDate';
 import { reservationDay, reservationTime } from '../../../atoms';
 
 import { Main, CustomDatePicker } from './FirstStep.styled';
@@ -23,8 +25,8 @@ registerLocale('ko', ko);
  */
 
 const FirstStep = ({ setStep }) => {
-  const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(today);
+  const availableDay = new Date(checkHoliday());
+  const [selectedDate, setSelectedDate] = useState(availableDay);
   const [recoilSelectedDate, setRecoilSelectedDate] = useRecoilState(reservationDay);
   const [selectedTime, setSelectedTime] = useRecoilState(reservationTime);
   const [timeList, setTimeList] = useState(defaultTime);
@@ -86,8 +88,8 @@ const FirstStep = ({ setStep }) => {
           dateFormatCalendar='yy년 LL월'
           closeOnScroll={true}
           selected={selectedDate}
-          minDate={today}
-          maxDate={new Date(today.getFullYear(), today.getMonth() + 1)}
+          minDate={availableDay}
+          maxDate={new Date(getMaxDate(availableDay))}
           filterDate={isWeekday}
           onChange={(date) => setSelectedDate(date)}
           locale='ko'
